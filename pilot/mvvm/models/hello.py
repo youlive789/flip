@@ -1,8 +1,9 @@
-import cv2
-import numpy as np
-from PIL import ImageGrab, Image
 import pygetwindow as gw
+import numpy as np
 import win32gui
+
+import cv2
+from PIL import ImageGrab, Image
 
 import pytesseract
 pytesseract.pytesseract.tesseract_cmd = r'D:\Program Files\Tesseract-OCR\tesseract'
@@ -25,7 +26,8 @@ class Hello:
         self._set_cv2_processed_screen()
         
     def _set_now_window(self):
-        _, _, (x,y) = win32gui.GetCursorInfo()
+        _, _, (x, y) = win32gui.GetCursorInfo()
+        print(x, y)
         self.now_window = gw.getWindowsAt(x,y)[0]
 
     def _set_now_screen(self):
