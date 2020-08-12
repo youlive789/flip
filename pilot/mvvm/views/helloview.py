@@ -1,3 +1,4 @@
+import keyboard
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.app import App
@@ -16,9 +17,14 @@ class HelloView(Screen):
         app.hello_view_model.bind(
             click_property=lambda o,v: print(o,v)
         )
+        keyboard.hook(self.keyboard_test)
 
     def button_clicked(self, btn):
         app = App.get_running_app()
         app.hello_view_model.update_click_property(btn)
-    
 
+    def keyboard_test(self, e):
+        app = App.get_running_app()
+        for code in keyboard._pressed_events:
+            if e.name == 'ctrl':
+                print(app.hello_view_model.hello.get_recognized_text())
