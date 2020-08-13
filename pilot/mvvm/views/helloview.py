@@ -13,15 +13,11 @@ class HelloView(Screen):
         Clock.schedule_once(lambda dt : self.prepare())
 
     def prepare(self):
-        app = App.get_running_app()
-        app.hello_view_model.bind(
-            click_property=lambda o,v: print(o,v)
-        )
+        # app = App.get_running_app()
+        # app.hello_view_model.bind(
+        #     click_property=lambda o,v: print(o,v)
+        # )
         keyboard.hook(self.keyboard_test)
-
-    def button_clicked(self, btn):
-        app = App.get_running_app()
-        app.hello_view_model.update_click_property(btn)
 
     def keyboard_test(self, e):
         app = App.get_running_app()

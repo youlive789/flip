@@ -1,4 +1,3 @@
-import pygetwindow as gw
 import numpy as np
 import win32gui
 
@@ -26,12 +25,24 @@ class Hello:
         self._set_cv2_processed_screen()
         
     def _set_now_window(self):
-        _, _, (x, y) = win32gui.GetCursorInfo()
-        print(x, y)
-        self.now_window = gw.getWindowsAt(x,y)[0]
+        x, y = self._get_mouse_pos()
+        self.now_window = self._get_window_by_pos(x, y)
+
+    def _get_window_by_pos(self, x, y):
+        top_windows = []
+        win32gui.EnumWindows(self._window_enumeration_handler, top_windows)
+        for window in top_windows:
+            x_low, y_low, x_high, y_high = window[1]
+            x_in = x >= x_low and x <= x_high
+            y_in = y >= y_low and y <= y_high
+            if x_in and y_in and window[2] != '':
+                return window[1]
+
+    def _window_enumeration_handler(self, hwnd, top_windows):
+        top_windows.append((hwnd, win32gui.GetWindowRect(hwnd), win32gui.GetWindowText(hwnd)))
 
     def _set_now_screen(self):
-        capture_box = (self.now_window.left, self.now_window.top, self.now_window.right, self.now_window.bottom)
+        capture_box = (self.now_window[0], self.now_window[1], self.now_window[2], self.now_window[3])
         capture_img = ImageGrab.grab(bbox=capture_box)
         capture_img_numpy = np.array(capture_img)
         self.now_screen = capture_img_numpy
@@ -50,19 +61,25 @@ class Hello:
 
     def _get_mouse_pos(self):
         _, _, (x,y) = win32gui.GetCursorInfo()
-        return x, y
+        return x, y - 25
 
     def _get_mouse_pos_text(self, x_mouse, y_mouse):
+        img = self._get_mouse_in_numpy_array_img(x_mouse, y_mouse)
+        if img:
+            text = pytesseract.image_to_string(img, lang="kor+eng", config='--psm 7 --oem 1')
+        else:
+            text = ""
+        return text
+
+    def _get_mouse_in_numpy_array_img(self, x_mouse, y_mouse):
         for idx in range(len(self.cv2_processed_contours)):
             x, y, w, h = cv2.boundingRect(self.cv2_processed_contours[idx])
             x_in = (x_mouse >= x) and (x_mouse <= x + w)
             y_in = (y_mouse >= y) and (y_mouse <= y + h)
 
             if x_in and y_in:
+                print(x_mouse, y_mouse, x, y, x+w, y+h)
                 img = Image.fromarray(self.now_screen[y:y+h, x:x+w])
-                text = pytesseract.image_to_string(img, lang="kor+eng", config='--psm 7 --oem 1')
-                return text
-            else:
-                continue
+                return img
 
-        return ''
+        return None
