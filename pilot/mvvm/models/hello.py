@@ -53,7 +53,7 @@ class Hello:
         grad = cv2.morphologyEx(self.now_screen, cv2.MORPH_GRADIENT, kernel)
 
         _, bw = cv2.threshold(grad, 0.0, 255.0, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 1))
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 3))
         connected = cv2.morphologyEx(bw, cv2.MORPH_CLOSE, kernel)
 
         contours, _ = cv2.findContours(connected, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_NONE)
@@ -78,7 +78,6 @@ class Hello:
             y_in = (y_mouse >= y) and (y_mouse <= y + h)
 
             if x_in and y_in:
-                print(x_mouse, y_mouse, x, y, x+w, y+h)
                 img = Image.fromarray(self.now_screen[y:y+h, x:x+w])
                 return img
 

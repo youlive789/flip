@@ -21,6 +21,5 @@ class HelloView(Screen):
 
     def keyboard_test(self, e):
         app = App.get_running_app()
-        for code in keyboard._pressed_events:
-            if e.name == 'ctrl':
-                print(app.hello_view_model.hello.get_recognized_text())
+        if e.name == 'ctrl' and e.event_type == "down":
+            print(app.hello_view_model.hello.get_recognized_text())
