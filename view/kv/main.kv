@@ -1,4 +1,12 @@
-<HelloView>
+# -*- coding: utf-8 -*-
+<MainView>
+    canvas.before:
+        Color:
+            rgba: .8, .8, .8, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
     BoxLayout:
+        orientation: 'horizontal'
         Label:
-            text:hello
+            text: 'Flip\nsimple and fast'

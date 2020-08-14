@@ -1,10 +1,9 @@
-import numpy as np
-import win32gui
-
 import cv2
+import win32gui
+import numpy as np
+import pytesseract
 from PIL import ImageGrab, Image
 
-import pytesseract
 pytesseract.pytesseract.tesseract_cmd = r'D:\Program Files\Tesseract-OCR\tesseract'
 
 class OCR:
