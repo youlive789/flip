@@ -4,7 +4,7 @@ import numpy as np
 import pytesseract
 from PIL import ImageGrab, Image
 
-pytesseract.pytesseract.tesseract_cmd = r'D:\Program Files\Tesseract-OCR\tesseract'
+pytesseract.pytesseract.tesseract_cmd = r'third-party\tesseract-win\tesseract'
 
 class OCR:
     now_window = None
@@ -59,7 +59,7 @@ class OCR:
 
     def _get_mouse_pos(self):
         _, _, (x,y) = win32gui.GetCursorInfo()
-        return x, y - 25
+        return x, y
 
     def _get_mouse_pos_text(self, x_mouse, y_mouse):
         img = self._get_mouse_in_numpy_array_img(x_mouse, y_mouse)
