@@ -28,11 +28,5 @@ class MainView(Screen):
             self.is_pressing = True
             read_text = app.main_view_model.ocr.get_recognized_text()
             print(read_text)
-
-            _, _, (x,y) = win32gui.GetCursorInfo()
-            self.tooltip = Popup(content=Label(text=read_text))
-            self.tooltip.open()
-
         elif e.name == 'ctrl' and e.event_type == "up":
             self.is_pressing = False
-            self.tooltip.dismiss()
