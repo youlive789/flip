@@ -33,6 +33,6 @@ if __name__ == "__main__":
     dll.ahkExec('MouseGetPos, xPos, yPos, winId' \
 '\n    PixelGetColor, color, %xPos%, %yPos%' \
 '\n    WinGetTitle winTitle, ahk_id %winId%' \
-'\n    ToolTip "%winTitle%"`n%xPos% %yPos% %color%')
+'\n    ToolTip 이건 툴팁이라고 해요 이건 툴팁이라고 해요 이건 툴팁이라고 해요')
     dll.ahkExec('sleep 5000')
     

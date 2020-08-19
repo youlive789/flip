@@ -1,3 +1,4 @@
+import ctypes
 import keyboard
 import win32gui
 
@@ -12,12 +13,12 @@ Builder.load_file("view/kv/main.kv")
 
 class MainView(Screen):
 
-    tooltip = None
-
     def __init__(self, **kwargs):
         super(MainView, self).__init__(**kwargs)
         self.is_pressing = False
         Clock.schedule_once(lambda dt : self.prepare())
+        self.ahk = ctypes.cdll.LoadLibrary("third-party/autohotkey-win/AutoHotKey.dll")
+        self.ahk.ahktextdll(u"")
 
     def prepare(self):
         keyboard.hook(self.ctrl_pressed)
@@ -28,5 +29,7 @@ class MainView(Screen):
             self.is_pressing = True
             read_text = app.main_view_model.ocr.get_recognized_text()
             print(read_text)
+            self.ahk.ahkExec("ToolTip " + read_text)
         elif e.name == 'ctrl' and e.event_type == "up":
+            self.ahk.ahkExec("ToolTip")
             self.is_pressing = False
