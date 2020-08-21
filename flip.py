@@ -1,15 +1,11 @@
 from kivy.app import App
+from kivy.core.window import Window
 from view.mainview import MainView
 from viewmodel.mainviewmodel import MainViewModel
 
-from kivy.config import Config
-Config.set('graphics','borderless',1)
-Config.set('graphics','resizable',0)
-Config.set('graphics', 'width', '200')
-Config.set('graphics', 'height', '350')
-
 class FlipApp(App):
     def build(self):
+        Window.size = (200,350)
         self.main_view_model = MainViewModel()
         return MainView()
 

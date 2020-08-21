@@ -7,6 +7,7 @@ from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 
 Builder.load_file("view/kv/main.kv")
@@ -22,6 +23,7 @@ class MainView(Screen):
 
     def prepare(self):
         keyboard.hook(self.ctrl_pressed)
+        Window.bind(on_request_close=self.minimize_window)
 
     def ctrl_pressed(self, e):
         app = App.get_running_app()
@@ -33,3 +35,7 @@ class MainView(Screen):
         elif e.name == 'ctrl' and e.event_type == "up":
             self.ahk.ahkExec("ToolTip")
             self.is_pressing = False
+
+    def minimize_window(self, *args):
+        print("x 버튼을 눌렀어요")
+        return True
