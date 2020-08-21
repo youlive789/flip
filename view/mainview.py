@@ -9,6 +9,7 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
+from view.systemtray import SystemTrayIcon
 
 Builder.load_file("view/kv/main.kv")
 
@@ -16,6 +17,7 @@ class MainView(Screen):
 
     def __init__(self, **kwargs):
         super(MainView, self).__init__(**kwargs)
+        self.system_tray = SystemTrayIcon()
         self.is_pressing = False
         Clock.schedule_once(lambda dt : self.prepare())
         self.ahk = ctypes.cdll.LoadLibrary("third-party/autohotkey-win/AutoHotKey.dll")
@@ -37,5 +39,5 @@ class MainView(Screen):
             self.is_pressing = False
 
     def minimize_window(self, *args):
-        print("x 버튼을 눌렀어요")
+        App.get_running_app().root_window.minimize()
         return True

@@ -132,27 +132,3 @@ class SystemTrayIcon:
         Shell_NotifyIcon(NIM_DELETE, nid)
         PostQuitMessage(0)
         exit()
-
-kv = '''
-BoxLayout:
-    size_hint_y: None
-    height: '50sp'
-'''
-
-class SysTrayApp(App):
-
-    def __init__(self, **kwargs):
-        self.w=SystemTrayIcon()
-        return super(SysTrayApp, self).__init__(**kwargs)
-
-    def build(self):
-        # Window.borderless = True
-        self.root = Builder.load_string(kv)
-        self.icon = 'systray.png'
-        return self.root
-
-    def on_close(self):
-        print("test")
-
-if __name__ == '__main__':
-    SysTrayApp().run()
