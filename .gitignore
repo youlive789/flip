@@ -1,1 +1,4 @@
+third-party/opennmt/*
+third-party/opennmt/assets/*
+third-party/opennmt/variables/*
 *.pyc
