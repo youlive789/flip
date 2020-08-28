@@ -43,9 +43,10 @@ class MainView(Screen):
             input_ids = torch.tensor(self.tokenizer.encode(read_text, add_special_tokens=True)).unsqueeze(0).to(torch.device("cpu"))
             generated = self.model.generate(input_ids, decoder_start_token_id=self.model.config.decoder.pad_token_id)
             translated = self.tokenizer.decode(generated[0])
+
             translated = translated.replace("[PAD]", "")
             translated = translated.replace("[SEP]", "")
-            print(translated)
+            print("번역 : ", translated)
 
             self.ahk.ahkExec("ToolTip " + translated)
         elif e.name == 'ctrl' and e.event_type == "up":
