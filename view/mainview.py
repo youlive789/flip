@@ -1,7 +1,6 @@
 import ctypes
 import keyboard
 import win32gui
-from unidecode import unidecode
 
 from kivy.app import App
 from kivy.clock import Clock
@@ -34,7 +33,6 @@ class MainView(Screen):
             self.is_pressing = True
 
             read_text = app.main_view_model.ocr.get_recognized_text()
-            read_text = unidecode(read_text)
             cmd = "ToolTip " + read_text
             self.ahk.ahkExec(cmd)
         elif e.name == 'ctrl' and e.event_type == "up":
