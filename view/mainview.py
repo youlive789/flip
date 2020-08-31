@@ -12,6 +12,7 @@ from kivy.uix.screenmanager import Screen
 from view.systemtray import SystemTrayIcon
 
 import chardet
+import unidecode
 
 Builder.load_file("view/kv/main.kv")
 
@@ -35,10 +36,11 @@ class MainView(Screen):
             self.is_pressing = True
 
             read_text = app.main_view_model.ocr.get_recognized_text()
-            encoding = chardet.detect(read_text.encode("utf-8"))
-            print(encoding)
+            read_text = read_text.strip()
+            print(read_text)
 
             cmd = "ToolTip " + read_text
+            print(cmd)
             self.ahk.ahkExec(cmd)
         elif e.name == 'ctrl' and e.event_type == "up":
             self.ahk.ahkExec("ToolTip")
