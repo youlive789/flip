@@ -11,9 +11,6 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 from view.systemtray import SystemTrayIcon
 
-import chardet
-import unidecode
-
 Builder.load_file("view/kv/main.kv")
 
 class MainView(Screen):
