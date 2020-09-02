@@ -11,17 +11,28 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen
 from view.systemtray import SystemTrayIcon
 
+from transformers import EncoderDecoderModel, BertTokenizer, Trainer, TrainingArguments
+import torch
+
 Builder.load_file("view/kv/main.kv")
 
 class MainView(Screen):
 
     def __init__(self, **kwargs):
         super(MainView, self).__init__(**kwargs)
-        self.system_tray = SystemTrayIcon()
         self.is_pressing = False
         Clock.schedule_once(lambda dt : self.prepare())
+
+        # systemtray
+        self.system_tray = SystemTrayIcon()
+
+        # autohotkey
         self.ahk = ctypes.cdll.LoadLibrary("third-party/autohotkey-win/AutoHotKey.dll")
         self.ahk.ahktextdll(u"")
+
+        # huggingface
+        self.model = EncoderDecoderModel.from_pretrained('third-party/huggingface/')
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased')
 
     def prepare(self):
         keyboard.hook(self.ctrl_pressed)
@@ -34,10 +45,13 @@ class MainView(Screen):
 
             read_text = app.main_view_model.ocr.get_recognized_text()
             read_text = read_text.strip()
-            print(read_text)
 
-            cmd = "ToolTip " + read_text
-            print(cmd)
+            input_ids = torch.tensor(self.tokenizer.encode(read_text, add_special_tokens=True)).unsqueeze(0).to(torch.device("cpu"))
+            generated = self.model.generate(input_ids, decoder_start_token_id=self.model.config.decoder.pad_token_id)
+            translated_text = self.tokenizer.decode(generated[0])
+            print(translated_text)
+
+            cmd = "ToolTip " + translated_text.encode("utf-8").decode("utf-8")
             self.ahk.ahkExec(cmd)
         elif e.name == 'ctrl' and e.event_type == "up":
             self.ahk.ahkExec("ToolTip")
