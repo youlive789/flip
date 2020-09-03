@@ -14,6 +14,8 @@ from view.systemtray import SystemTrayIcon
 from transformers import EncoderDecoderModel, BertTokenizer, Trainer, TrainingArguments
 import torch
 
+from unicodedata import normalize
+
 Builder.load_file("view/kv/main.kv")
 
 class MainView(Screen):
@@ -49,13 +51,19 @@ class MainView(Screen):
             input_ids = torch.tensor(self.tokenizer.encode(read_text, add_special_tokens=True)).unsqueeze(0).to(torch.device("cpu"))
             generated = self.model.generate(input_ids, decoder_start_token_id=self.model.config.decoder.pad_token_id)
             translated_text = self.tokenizer.decode(generated[0])
-            print(translated_text)
+            translated_text = self.process_translated_text(translated_text)
 
-            cmd = "ToolTip " + translated_text.encode("utf-8").decode("utf-8")
+            cmd = "ToolTip " + translated_text
             self.ahk.ahkExec(cmd)
         elif e.name == 'ctrl' and e.event_type == "up":
             self.ahk.ahkExec("ToolTip")
             self.is_pressing = False
+
+    def process_translated_text(self, translated_text):
+        translated_text = translated_text.replace("[PAD]", "")
+        translated_text = translated_text.replace("[SEP]", "")
+        translated_text = normalize('NFC', translated_text)
+        return translated_text
 
     def minimize_window(self, *args):
         App.get_running_app().root_window.minimize()
