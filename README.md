@@ -1,11 +1,17 @@
 # flip
-Screen language translation using OCR, NMT
+Language study application using OCR, NMT
 
 ### 1. 소개
-flip은 OCR과 NMT를 이용하여 화면상의 텍스트를 번역해주는 앱입니다. 데스크탑 환경에서 워드 프로세서, 브라우저, 게임 등의 텍스트를 인식하여 번역을 제공해주는 것을 목표로 하고 있습니다.
+flip은 OCR과 NMT를 이용하여 화면상의 텍스트를 번역해주는 앱입니다. 데스크탑 환경에서 워드 프로세서, 브라우저, 게임 등의 텍스트를 인식하여 번역을 제공합니다. flip을 통해서 쉽게 언어공부를 할 수 있도록 사람들을 돕는 것이 flip의 목표입니다.
 
+ - 사용법 (개발중이므로 정상동작하지 않습니다.)
+    - pip install -r requirements.txt
+    - python flip.py
+  
 ### 2. 진행상황 및 문제들
  - UI 화면
+    ![flip 기본 UI](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbtNISQ%2FbtqIVIhqs39%2F3k0NL7QQKKqfxRrN66bCf1%2Fimg.png)
+    ![flip 번역결과](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbVkthJ%2FbtqIVHQlYr8%2FfgwFMMa9RJemFzKY03DTz1%2Fimg.png)
  - 번역모델
     - 고품질의 parallel corpus 데이터를 찾아야함.
     - huggingface의 경우 모델크기가 너무 큰 단점이 있음. 또한 학습시킨 모델이 onnx 모델로 전환되지 않는 버그를 수정해야함.
