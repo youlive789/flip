@@ -1,2 +1,4 @@
 third-party/huggingface/*
+build/*
 *.pyc
+*.spec
