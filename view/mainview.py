@@ -1,6 +1,8 @@
+import sys
 import ctypes
 import keyboard
 import win32gui
+from pathlib import Path
 
 from kivy.app import App
 from kivy.clock import Clock
@@ -33,7 +35,11 @@ class MainView(Screen):
         self.ahk.ahktextdll(u"")
 
         # huggingface
-        self.model = EncoderDecoderModel.from_pretrained('third-party/huggingface/')
+        if getattr(sys, 'frozen', False):
+            self.model = EncoderDecoderModel.from_pretrained(sys._MEIPASS + '\\third-party\\huggingface\\')
+        else:
+            self.model = EncoderDecoderModel.from_pretrained('./third-party/huggingface/')
+            
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-uncased')
 
     def prepare(self):
