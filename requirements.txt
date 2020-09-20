@@ -4,3 +4,4 @@ keyboard
 numpy
 opencv-python
 pytesseract
+transformers

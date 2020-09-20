@@ -4,7 +4,10 @@ Language study application using OCR, NMT
 ### 1. 소개
 flip은 OCR과 NMT를 이용하여 화면상의 텍스트를 번역해주는 앱입니다. 데스크탑 환경에서 워드 프로세서, 브라우저, 게임 등의 텍스트를 인식하여 번역을 제공합니다. flip을 통해서 쉽게 언어공부를 할 수 있도록 사람들을 돕는 것이 flip의 목표입니다.
 
- - 사용법 (개발중이므로 정상동작하지 않습니다.)
+ - 사용법 
+    - 학습된 자연어모델 다운로드
+      - https://drive.google.com/drive/folders/1-4QYoBB8-JCQOUTENfiV3HiEpq_4nODi?usp=sharing
+      - third-party/huggingface 폴더에 config.json, pytorch_model.bin을 다운로드합니다.
     - pip install -r requirements.txt
     - python flip.py
   
