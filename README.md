@@ -12,6 +12,8 @@ flip은 OCR과 NMT를 이용하여 화면상의 텍스트를 번역해주는 앱
     - python flip.py
   
 ### 2. 진행상황 및 문제들
+ - 프로젝트 구조
+   ![flip 프로젝트 구조](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FV79VW%2FbtqI6Glh6N5%2FM1kUkMisvPGaNVxFnUbnV1%2Fimg.jpg)
  - UI 화면
     - flip 기본 UI
         ![flip 기본 UI](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbtNISQ%2FbtqIVIhqs39%2F3k0NL7QQKKqfxRrN66bCf1%2Fimg.png)
